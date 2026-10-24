@@ -4,6 +4,55 @@
 [build]
   publish = "."
 
+# Netlify Pretty URLs Subdirectory Rewrites
+# When a visitor goes to /articles/xyz or /about, relative requests to assets/ or ../assets/
+# may resolve with /articles/ or /about/ prefixed. These rules transparently rewrite them to root.
+[[redirects]]
+  from = "/articles/assets/*"
+  to = "/assets/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/articles/images/*"
+  to = "/assets/images/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/about/assets/*"
+  to = "/assets/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/about/images/*"
+  to = "/assets/images/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/archives/assets/*"
+  to = "/assets/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/archives/images/*"
+  to = "/assets/images/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/investigations/assets/*"
+  to = "/assets/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/investigations/images/*"
+  to = "/assets/images/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/images/*"
+  to = "/assets/images/:splat"
+  status = 200
+
+# Fallback 404 handler for non-existent routes
 [[redirects]]
   from = "/*"
   to = "/404.html"
@@ -19,5 +68,10 @@
 
 [[headers]]
   for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/images/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
